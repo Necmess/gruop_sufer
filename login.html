@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>로그인 — SURF KOREA</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700;800&family=Noto+Sans+KR:wght@400;500;700;900&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body class="standalone-page">
+  <main class="login-view">
+    <div class="login-box">
+      <a href="index.html" class="logo"><span class="logo-mark"></span> SURF<span class="logo-accent">KOREA</span></a>
+      <h1>다시, 파도 안으로</h1>
+      <p class="login-sub">즐겨찾기한 스팟과 나만의 서핑 기록을 확인하세요.</p>
+      <form id="loginForm">
+        <label for="username">아이디<input id="username" type="text" placeholder="아이디를 입력하세요" autocomplete="username" required></label>
+        <label for="password">비밀번호<input id="password" type="password" placeholder="비밀번호를 입력하세요" autocomplete="current-password" required></label>
+        <p class="login-error" id="loginError" role="alert"></p>
+        <button type="submit" class="btn btn-primary btn-block">로그인</button>
+      </form>
+      <p class="demo-hint">테스트 계정 <b>admin / admin</b></p>
+      <a class="btn btn-outline btn-block" href="index.html">← 홈으로 돌아가기</a>
+    </div>
+  </main>
+  <script src="js/login-page.js"></script>
+</body>
+</html>

@@ -1,0 +1,39 @@
+<main id="view-home" class="view active">
+  <section class="hero" id="home">
+    <video class="hero-video" autoplay muted loop playsinline poster="https://images.unsplash.com/photo-1502680390469-be75c86b636f?q=80&w=1600&auto=format&fit=crop" onerror="this.style.display='none'">
+      <source src="https://assets.mixkit.co/videos/preview/mixkit-waves-in-the-sea-1164-large.mp4" type="video/mp4">
+    </video>
+    <div class="hero-overlay"></div>
+    <div class="hero-content">
+      <p class="hero-eyebrow">국내 서핑 스팟 · 오늘의 컨디션</p>
+      <h1>오늘 파도는<br>어디가 좋을까요?</h1>
+      <p class="hero-sub">파고와 바람을 기준으로 오늘 타기 좋은 스팟을 찾아보세요.</p>
+      <div class="hero-cta">
+        <a href="#spots" class="btn btn-primary btn-lg" data-scroll="spots">스팟 둘러보기</a>
+        <button class="btn btn-ghost btn-lg" id="openLessonHero">초보자 레슨 보기</button>
+      </div>
+    </div>
+  </section>
+
+  <section class="today-highlight">
+    <div class="section-inner">
+      <div class="today-card recommend" id="todayRecommend"><span class="today-tag">오늘 가장 좋은 곳</span><div class="today-body loading-skel">불러오는 중...</div></div>
+      <div class="today-card avoid" id="todayAvoid"><span class="today-tag">오늘은 잠시 쉬어가기</span><div class="today-body loading-skel">불러오는 중...</div></div>
+    </div>
+  </section>
+
+  <section class="spots-section" id="spots">
+    <div class="section-inner">
+      <div class="section-head"><div class="section-head-copy"><h2>전국 서핑 스팟</h2><p>지도로 위치를 보고, 카드에서 오늘의 컨디션을 비교해보세요.</p></div><button class="btn btn-outline spot-fav-filter" id="favToggleBtn">즐겨찾기 스팟</button></div>
+      <div class="status-bar" id="statusBar" style="display:none"></div>
+      <div class="spots-layout">
+        <div class="map-wrap"><div id="map"></div><div class="map-legend"><span><i class="dot good"></i>좋음</span><span><i class="dot fair"></i>보통</span><span><i class="dot poor"></i>나쁨</span></div></div>
+        <div class="cards-wrap">
+          <div class="cards-toolbar"><div class="cards-count" id="cardsCount">전국 스팟 18곳</div></div>
+          <div class="cards-grid" id="cardsGrid"></div>
+        </div>
+      </div>
+    </div>
+  </section>
+  <footer class="site-footer"><p>파고와 바람 예보를 바탕으로 오늘의 서핑 컨디션을 안내합니다.</p></footer>
+</main>

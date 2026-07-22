@@ -1,0 +1,7 @@
+/* CSS entrypoint for compatibility. Feature styles live in css/. */
+@import url("css/base.css");
+@import url("css/navigation.css");
+@import url("css/sections.css");
+@import url("css/auth.css");
+@import url("css/responsive.css");
+@import url("css/accessibility.css");

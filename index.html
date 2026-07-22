@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>SURF KOREA — 실시간 서핑 스팟 정보</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700;800&family=Noto+Sans+KR:wght@400;500;700;900&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <header class="navbar" id="navbar">
+    <div class="nav-inner">
+      <a href="#home" class="logo" data-view="home"><span class="logo-mark"></span> SURF<span class="logo-accent">KOREA</span></a>
+      <nav class="nav-links"><a href="#home" data-view="home">홈</a><a href="#spots" data-view="home">스팟 지도</a><a href="#lesson" id="openLessonNav">서핑 레슨</a></nav>
+      <div class="nav-actions">
+        <div class="search-box"><input type="text" id="searchInput" placeholder="스팟·지역 검색 (예: 양양)" autocomplete="off"><button id="searchClearBtn" class="search-clear" title="검색 초기화">✕</button></div>
+        <button class="btn btn-primary" id="loginBtn">로그인</button>
+      </div>
+      <button class="nav-burger" id="navBurger">☰</button>
+    </div>
+    <div class="mobile-menu" id="mobileMenu"><div class="mobile-search"><input type="search" id="mobileSearchInput" placeholder="스팟·지역 검색"><span>⌕</span></div><a href="#spots" data-scroll="spots">스팟 지도</a><a href="#lesson" id="openLessonMobile">서핑 레슨</a><button id="mobileLoginBtn">로그인</button></div>
+  </header>
+
+  <div id="sectionLoader" class="section-loader"><div class="wave-loader"></div><p>서핑 데이터를 준비하는 중...</p></div>
+  <div id="app-sections"></div>
+
+  <div class="modal" id="lessonModal" role="dialog" aria-modal="true" aria-labelledby="lessonModalTitle"><div class="modal-backdrop" data-close="lessonModal"></div><div class="modal-panel"><button class="modal-close" data-close="lessonModal" aria-label="레슨 모달 닫기">✕</button><h3 id="lessonModalTitle">서핑, 처음이라면</h3><div class="video-frame"><iframe width="100%" height="100%" src="https://www.youtube.com/embed/CXyH30GgwbI" title="서핑 레슨 영상" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe></div></div></div>
+  <div class="modal" id="spotModal" role="dialog" aria-modal="true" aria-labelledby="spotModalTitle"><div class="modal-backdrop" data-close="spotModal"></div><div class="modal-panel spot-detail-panel" id="spotModalContent"><button class="modal-close" data-close="spotModal" aria-label="스팟 상세 모달 닫기">✕</button></div></div>
+  <div class="toast" id="toast"></div>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.js"></script>
+  <script src="js/data.js"></script>
+  <script src="js/ui.js"></script>
+  <script src="js/map.js"></script>
+  <script src="js/weather.js"></script>
+  <script src="js/reviews.js"></script>
+  <script src="js/mypage.js"></script>
+  <script src="js/spots.js"></script>
+  <script src="js/auth.js"></script>
+  <script src="js/app.js"></script>
+</body>
+</html>
