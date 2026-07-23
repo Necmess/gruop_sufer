@@ -46,9 +46,21 @@
 
   S.state = {
     favorites: savedFavorites.filter((id) => S.SPOTS.some((spot) => spot.id === id)),
+    user: (() => {
+      try {
+        const raw = sessionStorage.getItem("sk_user");
+        return raw ? JSON.parse(raw) : null;
+      } catch (error) {
+        return null;
+      }
+    })(),
     loggedIn: (() => {
-      try { return sessionStorage.getItem("sk_logged_in") === "true"; }
-      catch (error) { return false; }
+      try {
+        if (sessionStorage.getItem("sk_user")) return true;
+        return sessionStorage.getItem("sk_logged_in") === "true";
+      } catch (error) {
+        return false;
+      }
     })(),
     showFavOnly: false,
     search: "",

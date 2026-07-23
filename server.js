@@ -37,7 +37,13 @@ mongoose.connect(MONGODB_URI)
     if (!isAtlas) {
       console.warn('⚠️  Atlas가 아닌 로컬 MongoDB에 연결됐습니다. Atlas를 쓰려면 .env의 MONGODB_URI를 확인하세요.');
     }
-    startServer();
+    const { seedDefaultUser } = require('./lib/seedAdmin');
+    seedDefaultUser()
+      .then(startServer)
+      .catch((err) => {
+        console.error('기본 계정 생성 실패:', err.message);
+        startServer();
+      });
   })
   .catch((err) => {
     console.error('MongoDB 연결 실패:', err.message);
@@ -53,9 +59,11 @@ mongoose.connect(MONGODB_URI)
   });
 
 const productRoutes = require('./routes/products');
+const authRoutes = require('./routes/auth');
 const surfingHandler = require('./api/surfing');
 const kmaWeatherHandler = require('./api/kma-weather');
 
+app.use('/api/auth', authRoutes);
 app.use('/api/products', productRoutes);
 app.get('/api/surfing', surfingHandler);
 app.get('/api/kma-weather', kmaWeatherHandler);

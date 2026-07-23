@@ -150,7 +150,7 @@
         category: document.getElementById("writeCategory").value,
         price: Number(document.getElementById("writePrice").value),
         description: document.getElementById("writeDesc").value.trim() || "설명 없음",
-        seller: S.state.loggedIn ? "admin" : "익명 서퍼",
+        seller: S.state.user?.displayName || S.state.user?.username || "익명 서퍼",
       };
 
       if (selectedImageData) {
