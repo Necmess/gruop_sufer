@@ -52,6 +52,7 @@
     })(),
     showFavOnly: false,
     search: "",
+    page: 0,
     simMode: "normal",
     data: {},
     conditionsCache: savedConditions,

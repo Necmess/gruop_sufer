@@ -22,12 +22,31 @@
     });
   };
 
+  const PAGE_SIZE = 4;
+
   S.renderCards = function () {
     const list = S.visibleSpots();
     const count = document.getElementById("cardsCount");
     if (count) count.textContent = S.state.showFavOnly ? `즐겨찾기 ${list.length}곳` : `전국 스팟 ${list.length}곳`;
     const emptyMessage = S.state.showFavOnly && !S.state.search ? "저장한 즐겨찾기 스팟이 없습니다." : "검색 결과가 없습니다.";
-    document.getElementById("cardsGrid").innerHTML = list.length ? list.map(S.cardHtml).join("") : `<div class="card-state" style="grid-column:1/-1">${emptyMessage}</div>`;
+
+    const totalPages = Math.max(1, Math.ceil(list.length / PAGE_SIZE));
+    if (S.state.page > totalPages - 1) S.state.page = totalPages - 1;
+    if (S.state.page < 0) S.state.page = 0;
+    const pageStart = S.state.page * PAGE_SIZE;
+    const pageItems = list.slice(pageStart, pageStart + PAGE_SIZE);
+
+    document.getElementById("cardsGrid").innerHTML = list.length ? pageItems.map(S.cardHtml).join("") : `<div class="card-state" style="grid-column:1/-1">${emptyMessage}</div>`;
+    S.renderPagination(totalPages, list.length);
+  };
+
+  S.renderPagination = function (totalPages, itemCount) {
+    const pagination = document.getElementById("cardsPagination");
+    if (!pagination) return;
+    if (!itemCount || totalPages <= 1) { pagination.style.display = "none"; pagination.innerHTML = ""; return; }
+    pagination.style.display = "flex";
+    const dots = Array.from({ length: totalPages }, (_, index) => `<button class="page-dot ${index === S.state.page ? "active" : ""}" data-page="${index}" aria-current="${index === S.state.page ? "true" : "false"}" aria-label="${index + 1}페이지">${index + 1}</button>`).join("");
+    pagination.innerHTML = `<button class="page-arrow" data-page-nav="prev" ${S.state.page === 0 ? "disabled" : ""} aria-label="이전 페이지">‹</button><div class="page-dots">${dots}</div><button class="page-arrow" data-page-nav="next" ${S.state.page === totalPages - 1 ? "disabled" : ""} aria-label="다음 페이지">›</button>`;
   };
 
   S.updateStatusBar = function () {
@@ -68,11 +87,11 @@
   S.setupSearchAndFav = function () {
     const input = document.getElementById("searchInput");
     const mobileInput = document.getElementById("mobileSearchInput");
-    const updateSearch = (value, source) => { S.state.search = value; input.value = source === input ? value : input.value; if (mobileInput) mobileInput.value = source === mobileInput ? value : mobileInput.value; S.renderCards(); };
+    const updateSearch = (value, source) => { S.state.search = value; input.value = source === input ? value : input.value; if (mobileInput) mobileInput.value = source === mobileInput ? value : mobileInput.value; S.state.page = 0; S.renderCards(); };
     input.addEventListener("input", () => updateSearch(input.value, input));
     if (mobileInput) mobileInput.addEventListener("input", () => updateSearch(mobileInput.value, mobileInput));
-    document.getElementById("searchClearBtn").addEventListener("click", () => { input.value = ""; if (mobileInput) mobileInput.value = ""; S.state.search = ""; S.renderCards(); });
-    document.getElementById("favToggleBtn").addEventListener("click", (event) => { S.state.showFavOnly = !S.state.showFavOnly; event.currentTarget.classList.toggle("btn-primary", S.state.showFavOnly); event.currentTarget.textContent = S.state.showFavOnly ? "전체 스팟 보기" : "즐겨찾기 스팟"; S.renderCards(); });
+    document.getElementById("searchClearBtn").addEventListener("click", () => { input.value = ""; if (mobileInput) mobileInput.value = ""; S.state.search = ""; S.state.page = 0; S.renderCards(); });
+    document.getElementById("favToggleBtn").addEventListener("click", (event) => { S.state.showFavOnly = !S.state.showFavOnly; event.currentTarget.classList.toggle("btn-primary", S.state.showFavOnly); event.currentTarget.textContent = S.state.showFavOnly ? "전체 스팟 보기" : "즐겨찾기 스팟"; S.state.page = 0; S.renderCards(); });
   };
 
   S.setupCardDelegation = function () {
@@ -98,6 +117,10 @@
         }
         return;
       }
+      const pageNavButton = event.target.closest("[data-page-nav]");
+      if (pageNavButton) { S.state.page += pageNavButton.getAttribute("data-page-nav") === "next" ? 1 : -1; S.renderCards(); return; }
+      const pageDotButton = event.target.closest("[data-page]");
+      if (pageDotButton) { S.state.page = Number(pageDotButton.getAttribute("data-page")); S.renderCards(); return; }
       const retryButton = event.target.closest("[data-retry]");
       if (retryButton) { S.loadSpot(S.SPOTS.find((spot) => spot.id === retryButton.getAttribute("data-retry"))); return; }
       const card = event.target.closest(".spot-card");
