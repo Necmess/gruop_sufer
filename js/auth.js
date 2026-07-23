@@ -5,6 +5,7 @@
     const navbar = document.getElementById("navbar");
     if (navbar) navbar.classList.toggle("scrolled", view !== "home" || window.scrollY > 40);
     window.scrollTo({ top: 0, behavior: "instant" in window ? "instant" : "auto" });
+    if (view === "market" && typeof S.loadProducts === "function") S.loadProducts();
   };
 
   S.goToLoginWithTransition = function () {

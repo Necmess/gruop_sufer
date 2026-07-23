@@ -1,6 +1,6 @@
 (function (S) {
   S.loadSections = async function () {
-    const sectionPaths = ["sections/home.html", "sections/mypage.html"];
+    const sectionPaths = ["sections/home.html", "sections/mypage.html", "sections/market.html"];
     const responses = await Promise.all(sectionPaths.map((path) => fetch(path)));
     if (responses.some((response) => !response.ok)) throw new Error("페이지 섹션을 불러오지 못했습니다.");
     const markup = await Promise.all(responses.map((response) => response.text()));
@@ -21,6 +21,7 @@
     S.setAuthUI();
     S.setupNav();
     S.setupModals();
+    S.setupMarket();
     S.setupSearchAndFav();
     S.setupCardDelegation();
     S.setupSim();

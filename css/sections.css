@@ -533,3 +533,165 @@
 
 .fav-star.favorite-pop { animation: favorite-pop 0.42s cubic-bezier(0.2, 0.8, 0.3, 1); }
 .image-fav.active { box-shadow: 0 0 0 4px rgba(255, 217, 102, 0.2); }
+
+/* ── Market ── */
+.market-section { padding: 100px 0 48px; }
+
+.market-toolbar {
+  margin: 20px 0;
+  display: flex;
+  gap: 12px;
+  flex-wrap: wrap;
+  align-items: center;
+}
+
+.market-toolbar .search-box { flex: 1; min-width: 200px; }
+
+.market-toolbar .search-box input {
+  width: 100%;
+  background: var(--white);
+  border: 1.5px solid var(--line);
+  color: var(--ink);
+  border-radius: 999px;
+  padding: 10px 16px;
+  font-size: 0.88rem;
+}
+
+.market-toolbar .search-box input:focus {
+  outline: none;
+  border-color: var(--brand-light);
+}
+
+.category-filters { display: flex; gap: 8px; flex-wrap: wrap; }
+
+.product-card {
+  background: var(--white);
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  padding: 16px;
+  box-shadow: var(--shadow);
+  overflow: hidden;
+}
+
+.product-card-image {
+  width: 100%;
+  aspect-ratio: 4 / 3;
+  object-fit: cover;
+  border-radius: var(--radius-sm);
+  margin-bottom: 12px;
+  display: block;
+  background: var(--bg);
+}
+
+.product-card-image--empty {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--muted);
+  font-size: 0.82rem;
+  border: 1px dashed var(--line);
+}
+
+.product-card .badge {
+  display: inline-block;
+  background: var(--brand-soft);
+  color: var(--brand);
+  padding: 4px 10px;
+  border-radius: 999px;
+  font-size: 0.72rem;
+  font-weight: 700;
+}
+
+.product-card h3 {
+  font-size: 1rem;
+  margin: 10px 0 6px;
+  color: var(--navy);
+}
+
+.product-card .price {
+  font-weight: 700;
+  font-size: 1.1rem;
+  color: var(--navy);
+  margin: 0 0 8px;
+}
+
+.product-card .desc {
+  color: var(--muted);
+  font-size: 0.84rem;
+  margin: 0 0 12px;
+  line-height: 1.5;
+}
+
+.product-card .meta {
+  display: flex;
+  justify-content: space-between;
+  font-size: 0.74rem;
+  color: var(--muted);
+}
+
+.market-empty {
+  grid-column: 1 / -1;
+  text-align: center;
+  padding: 48px 20px;
+  color: var(--muted);
+  background: var(--white);
+  border: 1px dashed var(--line);
+  border-radius: var(--radius);
+}
+
+.market-write-form {
+  margin-top: 18px;
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+.market-write-form label {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  font-size: 0.82rem;
+  font-weight: 600;
+  color: var(--navy-2);
+}
+
+.market-write-form input,
+.market-write-form select,
+.market-write-form textarea {
+  padding: 11px 13px;
+  border: 1.5px solid var(--line);
+  border-radius: var(--radius-sm);
+  font-size: 0.9rem;
+  font-family: inherit;
+  background: var(--bg);
+}
+
+.market-write-form input:focus,
+.market-write-form select:focus,
+.market-write-form textarea:focus {
+  outline: none;
+  border-color: var(--brand-light);
+  background: var(--white);
+}
+
+.market-image-preview {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.market-image-preview[hidden] {
+  display: none;
+}
+
+.market-image-preview img {
+  width: 100%;
+  max-height: 220px;
+  object-fit: cover;
+  border-radius: var(--radius-sm);
+  border: 1px solid var(--line);
+}
+
+.market-image-preview .btn {
+  align-self: flex-start;
+}

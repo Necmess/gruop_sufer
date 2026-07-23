@@ -4,17 +4,34 @@
 
 ## 실행 방법
 
-HTML 섹션을 `fetch()`로 불러오기 때문에 `index.html`을 직접 열기보다 로컬 서버로 실행합니다.
+중고마켓·API는 Express 서버가 필요합니다. **맥에서는 5000번 포트가 AirPlay에 점유**되므로 기본 포트는 **3000**입니다.
+
+### 1. MongoDB Atlas (팀 공용 DB)
+
+1. [MongoDB Atlas](https://www.mongodb.com/cloud/atlas)에서 무료 클러스터 생성
+2. **Database Access** → DB 사용자 생성 (읽기/쓰기 권한)
+3. **Network Access** → `0.0.0.0/0` 허용 (팀원 각자 IP가 다를 때) 또는 IP 추가
+4. **Connect → Drivers** → Node.js 연결 문자열 복사
+5. 프로젝트 루트에서:
 
 ```bash
-python3 -m http.server 8000
+cp .env.example .env
+# .env 파일의 MONGODB_URI에 Atlas URI 붙여넣기 (USER/PASSWORD 수정)
 ```
 
-브라우저에서 아래 주소로 접속합니다.
+팀원은 **같은 `MONGODB_URI`** 를 `.env`에 넣으면 등록한 상품을 공유합니다.  
+`.env`는 Git에 올리지 마세요. URI는 Slack/카톡 등으로만 공유하세요.
 
-```text
-http://localhost:8000
+### 2. 서버 실행
+
+```bash
+npm install
+npm start
 ```
+
+브라우저: `http://127.0.0.1:3000`
+
+> `python3 -m http.server`만 쓰면 화면은 보이지만 **마켓 API·상품 저장은 동작하지 않습니다.**
 
 ## 주요 기능
 
