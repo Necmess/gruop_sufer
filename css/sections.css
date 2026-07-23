@@ -273,6 +273,65 @@
   gap: 16px;
 }
 
+/* ── Cards pagination ── */
+.cards-pagination {
+  display: none;
+  align-items: center;
+  justify-content: center;
+  gap: 14px;
+  margin-top: 22px;
+}
+
+.page-arrow {
+  width: 34px;
+  height: 34px;
+  flex-shrink: 0;
+  border-radius: 50%;
+  border: 1px solid var(--line);
+  background: var(--white);
+  color: var(--navy);
+  font-size: 1.15rem;
+  line-height: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: background 0.15s, color 0.15s, border-color 0.15s;
+}
+
+.page-arrow:hover:not(:disabled) {
+  background: var(--ocean);
+  color: var(--white);
+  border-color: var(--ocean);
+}
+
+.page-arrow:disabled { opacity: 0.35; cursor: not-allowed; }
+
+.page-dots {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.page-dot {
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  border: 1px solid transparent;
+  background: none;
+  color: var(--muted);
+  font-size: 0.82rem;
+  font-weight: 700;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background 0.15s, color 0.15s;
+}
+
+.page-dot:hover { background: var(--sky); }
+.page-dot.active { background: var(--ocean); color: var(--white); }
+
 /* ── Spot cards ── */
 .spot-card {
   background: var(--card);
