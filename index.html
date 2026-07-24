@@ -13,14 +13,16 @@
   <header class="navbar" id="navbar">
     <div class="nav-inner">
       <a href="#home" class="logo" data-view="home"><span class="logo-mark"></span> SURF<span class="logo-accent">KOREA</span></a>
-      <nav class="nav-links"><a href="#home" data-view="home">홈</a><a href="#spots" data-view="home">스팟 지도</a><a href="#lesson" id="openLessonNav">서핑 레슨</a></nav>
+      <nav class="nav-links"><a href="#home" data-view="home">홈</a><a href="#spots" data-view="home">스팟 지도</a><a href="#market" data-view="market">중고마켓</a><a href="#lesson" id="openLessonNav">서핑 레슨</a></nav>
       <div class="nav-actions">
         <div class="search-box"><input type="text" id="searchInput" placeholder="스팟·지역 검색 (예: 양양)" autocomplete="off"><button id="searchClearBtn" class="search-clear" title="검색 초기화">✕</button></div>
         <button class="btn btn-primary" id="loginBtn">로그인</button>
       </div>
       <button class="nav-burger" id="navBurger">☰</button>
     </div>
-    <div class="mobile-menu" id="mobileMenu"><div class="mobile-search"><input type="search" id="mobileSearchInput" placeholder="스팟·지역 검색"><span>⌕</span></div><a href="#spots" data-scroll="spots">스팟 지도</a><a href="#lesson" id="openLessonMobile">서핑 레슨</a><button id="mobileLoginBtn">로그인</button></div>
+    <div class="mobile-menu" id="mobileMenu"><div class="mobile-search"><input type="search" id="mobileSearchInput" placeholder="스팟·지역 검색"><span>⌕</span></div><a href="#spots" data-scroll="spots">스팟 지도</a><!-- 👇 중고마켓 메뉴 추가 -->
+  <a href="#market" data-view="market">중고마켓</a>
+  <a href="#lesson" id="openLessonMobile">서핑 레슨</a><button id="mobileLoginBtn">로그인</button></div>
   </header>
 
   <div id="sectionLoader" class="section-loader"><div class="wave-loader"></div><p>서핑 데이터를 준비하는 중...</p></div>
@@ -28,6 +30,33 @@
 
   <div class="modal" id="lessonModal" role="dialog" aria-modal="true" aria-labelledby="lessonModalTitle"><div class="modal-backdrop" data-close="lessonModal"></div><div class="modal-panel"><button class="modal-close" data-close="lessonModal" aria-label="레슨 모달 닫기">✕</button><h3 id="lessonModalTitle">서핑, 처음이라면</h3><div class="video-frame"><iframe width="100%" height="100%" src="https://www.youtube.com/embed/CXyH30GgwbI" title="서핑 레슨 영상" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe></div></div></div>
   <div class="modal" id="spotModal" role="dialog" aria-modal="true" aria-labelledby="spotModalTitle"><div class="modal-backdrop" data-close="spotModal"></div><div class="modal-panel spot-detail-panel" id="spotModalContent"><button class="modal-close" data-close="spotModal" aria-label="스팟 상세 모달 닫기">✕</button></div></div>
+  <div class="modal" id="marketWriteModal" role="dialog" aria-modal="true" aria-labelledby="marketWriteModalTitle">
+    <div class="modal-backdrop" data-close="marketWriteModal"></div>
+    <div class="modal-panel market-write-panel">
+      <button class="modal-close" data-close="marketWriteModal" aria-label="상품 등록 모달 닫기">✕</button>
+      <h3 id="marketWriteModalTitle">중고 상품 등록</h3>
+      <form id="marketWriteForm" class="market-write-form">
+        <label for="writeTitle">상품 제목<input type="text" id="writeTitle" placeholder="예: 9ft 롱보드" required></label>
+        <label for="writeCategory">카테고리
+          <select id="writeCategory">
+            <option value="board">서핑보드</option>
+            <option value="wetsuit">웻슈트</option>
+            <option value="accessory">악세서리/소품</option>
+          </select>
+        </label>
+        <label for="writePrice">가격 (원)<input type="number" id="writePrice" placeholder="180000" min="0" required></label>
+        <label for="writeImage">상품 사진 (선택)
+          <input type="file" id="writeImage" accept="image/jpeg,image/png,image/webp,image/gif">
+        </label>
+        <div id="writeImagePreview" class="market-image-preview" hidden>
+          <img id="writeImagePreviewImg" alt="선택한 상품 사진 미리보기">
+          <button type="button" class="btn btn-outline btn-sm" id="clearWriteImageBtn">사진 제거</button>
+        </div>
+        <label for="writeDesc">상품 설명<textarea id="writeDesc" placeholder="상태, 사용 횟수, 거래 방식 등" rows="4"></textarea></label>
+        <button type="submit" class="btn btn-primary btn-block">등록 완료</button>
+      </form>
+    </div>
+  </div>
   <div class="toast" id="toast"></div>
 
   <script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.js"></script>
@@ -40,5 +69,6 @@
   <script src="js/spots.js"></script>
   <script src="js/auth.js"></script>
   <script src="js/app.js"></script>
+  <script src="./js/market.js"></script>
 </body>
 </html>

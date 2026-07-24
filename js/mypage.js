@@ -2,6 +2,12 @@
   S.renderMyPage = function () {
     const grid = document.getElementById("favoriteGrid");
     if (!grid) return;
+
+    const usernameEl = document.getElementById("mypageUsername");
+    if (usernameEl) {
+      usernameEl.textContent = S.state.user?.displayName || S.state.user?.username || "서퍼";
+    }
+
     const favoriteSpots = S.SPOTS.filter((spot) => S.state.favorites.includes(spot.id));
     document.getElementById("favoriteCount").textContent = favoriteSpots.length;
     document.getElementById("lastChecked").textContent = new Intl.DateTimeFormat("ko-KR", { month: "numeric", day: "numeric" }).format(new Date());

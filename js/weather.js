@@ -30,9 +30,13 @@
     }
   };
 
+  S.apiBase = function () {
+    return window.location.origin;
+  };
+
   S.fetchOfficialSurfCondition = async function (spot) {
     const params = new URLSearchParams({ spot: spot.name, lat: spot.lat, lon: spot.lon });
-    const response = await S.fetchWithTimeout(`/api/surfing?${params.toString()}`);
+    const response = await S.fetchWithTimeout(`${S.apiBase()}/api/surfing?${params.toString()}`);
     if (response.status === 404) return null;
     let payload = null;
     try { payload = await response.json(); } catch (error) { payload = null; }
@@ -43,7 +47,7 @@
 
   S.fetchKmaWeather = async function (spot) {
     const params = new URLSearchParams({ lat: spot.lat, lon: spot.lon });
-    const response = await S.fetchWithTimeout(`/api/kma-weather?${params.toString()}`);
+    const response = await S.fetchWithTimeout(`${S.apiBase()}/api/kma-weather?${params.toString()}`);
     if (response.status === 404) return null;
     let payload = null;
     try { payload = await response.json(); } catch (error) { payload = null; }

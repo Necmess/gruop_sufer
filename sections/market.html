@@ -1,0 +1,36 @@
+<main id="view-market" class="view">
+  <section class="market-section">
+    <div class="section-inner">
+      
+      <!-- 1. 상단 타이틀 및 글쓰기 버튼 영역 -->
+      <div class="section-head">
+        <div class="section-head-copy">
+          <h2>서핑 중고마켓</h2>
+          <p>안 쓰는 서핑 용품을 이웃 서퍼들과 안전하게 거래해 보세요.</p>
+        </div>
+        <button class="btn btn-primary" id="openMarketWriteBtn">
+          + 상품 등록하기
+        </button>
+      </div>
+
+      <!-- 2. 검색 및 카테고리 필터 툴바 -->
+      <div class="market-toolbar">
+        <div class="search-box">
+          <input type="text" id="marketSearchInput" placeholder="어떤 용품을 찾으시나요? (예: 보드, 슈트)">
+        </div>
+        <div class="category-filters">
+          <button class="btn btn-outline active" data-category="all">전체</button>
+          <button class="btn btn-outline" data-category="board">서핑보드</button>
+          <button class="btn btn-outline" data-category="wetsuit">웻슈트</button>
+          <button class="btn btn-outline" data-category="accessory">악세서리/소품</button>
+        </div>
+      </div>
+
+      <!-- 3. 상품 목록이 카드 형태로 렌더링될 그리드 영역 -->
+      <div class="cards-grid" id="marketCardsGrid">
+        <p class="market-empty">상품 목록을 불러오는 중...</p>
+      </div>
+
+    </div>
+  </section>
+</main>

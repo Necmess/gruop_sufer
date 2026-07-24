@@ -12,15 +12,31 @@
   <main class="login-view">
     <div class="login-box">
       <a href="index.html" class="logo"><span class="logo-mark"></span> SURF<span class="logo-accent">KOREA</span></a>
-      <h1>다시, 파도 안으로</h1>
-      <p class="login-sub">즐겨찾기한 스팟과 나만의 서핑 기록을 확인하세요.</p>
+      <h1 id="authTitle">다시, 파도 안으로</h1>
+      <p class="login-sub" id="authSub">즐겨찾기한 스팟과 나만의 서핑 기록을 확인하세요.</p>
+
+      <div class="auth-tabs">
+        <button type="button" class="auth-tab active" id="showLoginTab">로그인</button>
+        <button type="button" class="auth-tab" id="showRegisterTab">회원가입</button>
+      </div>
+
       <form id="loginForm">
         <label for="username">아이디<input id="username" type="text" placeholder="아이디를 입력하세요" autocomplete="username" required></label>
         <label for="password">비밀번호<input id="password" type="password" placeholder="비밀번호를 입력하세요" autocomplete="current-password" required></label>
         <p class="login-error" id="loginError" role="alert"></p>
         <button type="submit" class="btn btn-primary btn-block">로그인</button>
       </form>
-      <p class="demo-hint">테스트 계정 <b>admin / admin</b></p>
+
+      <form id="registerForm" hidden>
+        <label for="registerUsername">아이디<input id="registerUsername" type="text" placeholder="3~20자, 영문·숫자·_" autocomplete="username" required></label>
+        <label for="registerDisplayName">닉네임 (선택)<input id="registerDisplayName" type="text" placeholder="마이페이지에 표시될 이름"></label>
+        <label for="registerPassword">비밀번호<input id="registerPassword" type="password" placeholder="4자 이상" autocomplete="new-password" required></label>
+        <label for="registerPasswordConfirm">비밀번호 확인<input id="registerPasswordConfirm" type="password" placeholder="비밀번호 다시 입력" autocomplete="new-password" required></label>
+        <p class="login-error" id="registerError" role="alert"></p>
+        <button type="submit" class="btn btn-primary btn-block">회원가입</button>
+      </form>
+
+      <p class="demo-hint">팀 공용 DB 계정 · 첫 실행 시 <b>admin / admin</b> 자동 생성</p>
       <a class="btn btn-outline btn-block" href="index.html">← 홈으로 돌아가기</a>
     </div>
   </main>
