@@ -19,6 +19,12 @@
     <div class="section-inner">
       <div class="today-card recommend" id="todayRecommend"><span class="today-tag">오늘 가장 좋은 곳</span><div class="today-body loading-skel">불러오는 중...</div></div>
       <div class="today-card avoid" id="todayAvoid"><span class="today-tag">오늘은 잠시 쉬어가기</span><div class="today-body loading-skel">불러오는 중...</div></div>
+      <div class="today-card nearby" id="todayNearby">
+        <span class="today-tag">내 위치와 가까운 곳</span>
+        <div class="today-body" id="todayNearbyBody">
+          <button type="button" class="today-locate-btn" id="todayNearbyLocateBtn"><svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"></circle><line x1="12" y1="2" x2="12" y2="5"></line><line x1="12" y1="19" x2="12" y2="22"></line><line x1="2" y1="12" x2="5" y2="12"></line><line x1="19" y1="12" x2="22" y2="12"></line></svg>가까운 스팟 찾기</button>
+        </div>
+      </div>
     </div>
   </section>
 
@@ -27,7 +33,17 @@
       <div class="section-head"><div class="section-head-copy"><h2>전국 서핑 스팟</h2><p>지도로 위치를 보고, 카드에서 오늘의 컨디션을 비교해보세요.</p></div><button class="btn btn-outline spot-fav-filter" id="favToggleBtn">즐겨찾기 스팟</button></div>
       <div class="status-bar" id="statusBar" style="display:none"></div>
       <div class="spots-layout">
-        <div class="map-wrap"><div id="map"></div><div class="map-legend"><span><i class="dot good"></i>좋음</span><span><i class="dot fair"></i>보통</span><span><i class="dot poor"></i>나쁨</span></div></div>
+        <div class="map-wrap">
+          <div id="map"></div>
+          <div class="map-toolbar" id="mapToolbar">
+            <div class="map-tool-group">
+              <button type="button" class="map-tool-btn" id="mapZoomInBtn" aria-label="지도 확대" title="확대"><svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"><line x1="12" y1="5" x2="12" y2="19"></line><line x1="5" y1="12" x2="19" y2="12"></line></svg></button>
+              <button type="button" class="map-tool-btn" id="mapZoomOutBtn" aria-label="지도 축소" title="축소"><svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"><line x1="5" y1="12" x2="19" y2="12"></line></svg></button>
+            </div>
+            <button type="button" class="map-tool-btn map-tool-standalone" id="mapLocateBtn" aria-label="내 위치로 이동" title="내 위치와 날씨 보기"><svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"></circle><line x1="12" y1="2" x2="12" y2="5"></line><line x1="12" y1="19" x2="12" y2="22"></line><line x1="2" y1="12" x2="5" y2="12"></line><line x1="19" y1="12" x2="22" y2="12"></line></svg></button>
+          </div>
+          <div class="map-legend"><span><i class="dot good"></i>좋음</span><span><i class="dot fair"></i>보통</span><span><i class="dot poor"></i>나쁨</span></div>
+        </div>
         <div class="cards-wrap">
           <div class="cards-toolbar"><div class="cards-count" id="cardsCount">전국 스팟 18곳</div></div>
           <div class="cards-grid" id="cardsGrid"></div>

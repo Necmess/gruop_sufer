@@ -70,5 +70,6 @@
     conditionsCache: savedConditions,
     map: null,
     markers: {},
+    userMarker: null,
   };
 })(window.SurfKorea = window.SurfKorea || {});
