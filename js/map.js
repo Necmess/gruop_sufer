@@ -1,7 +1,7 @@
 (function (S) {
   S.initMap = function () {
     if (typeof L === "undefined") throw new Error("지도 라이브러리를 불러오지 못했습니다.");
-    S.state.map = L.map("map", { scrollWheelZoom: false }).setView([36.4, 127.9], 6.6);
+    S.state.map = L.map("map", { scrollWheelZoom: false, zoomControl: false }).setView([36.4, 127.9], 6.6);
     L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", {
       attribution: "&copy; OpenStreetMap contributors",
       maxZoom: 18,
@@ -14,6 +14,49 @@
       marker.on("click", () => S.openSpotModal(spot.id));
       S.state.markers[spot.id] = marker;
     });
+
+    S.setupMapToolbar();
+  };
+
+  S.setupMapToolbar = function () {
+    const zoomInBtn = document.getElementById("mapZoomInBtn");
+    const zoomOutBtn = document.getElementById("mapZoomOutBtn");
+    const locateBtn = document.getElementById("mapLocateBtn");
+    const nearbyLocateBtn = document.getElementById("todayNearbyLocateBtn");
+    if (zoomInBtn) zoomInBtn.addEventListener("click", () => S.state.map.zoomIn());
+    if (zoomOutBtn) zoomOutBtn.addEventListener("click", () => S.state.map.zoomOut());
+    if (locateBtn) locateBtn.addEventListener("click", S.locateUser);
+    if (nearbyLocateBtn) nearbyLocateBtn.addEventListener("click", S.locateUser);
+  };
+
+  S.locateUser = function () {
+    const locateButtons = [document.getElementById("mapLocateBtn"), document.getElementById("todayNearbyLocateBtn")].filter(Boolean);
+    if (!navigator.geolocation) { S.toast("이 브라우저에서는 위치 확인을 지원하지 않습니다."); return; }
+    locateButtons.forEach((btn) => btn.classList.add("locating"));
+    navigator.geolocation.getCurrentPosition(
+      async (position) => {
+        locateButtons.forEach((btn) => btn.classList.remove("locating"));
+        const { latitude, longitude } = position.coords;
+        if (S.state.userMarker) S.state.map.removeLayer(S.state.userMarker);
+        const icon = L.divIcon({ className: "", html: '<div class="user-location-dot"></div>', iconSize: [14, 14], iconAnchor: [7, 7] });
+        S.state.userMarker = L.marker([latitude, longitude], { icon, zIndexOffset: 1000 }).addTo(S.state.map);
+        S.state.userMarker.bindPopup("<b>내 위치</b><br>날씨 확인 중...").openPopup();
+        S.state.map.flyTo([latitude, longitude], 11);
+        S.updateNearbySpot(latitude, longitude);
+        try {
+          const weather = await S.fetchKmaWeather({ lat: latitude, lon: longitude });
+          const weatherText = weather ? `${weather.weatherLabel || "날씨 정보 없음"} · 기온 ${Math.round(weather.temperature)}℃` : "날씨 정보를 가져오지 못했습니다.";
+          S.state.userMarker.setPopupContent(`<b>내 위치</b><br>${weatherText}`);
+        } catch (error) {
+          S.state.userMarker.setPopupContent("<b>내 위치</b><br>날씨 정보를 가져오지 못했습니다.");
+        }
+      },
+      () => {
+        locateButtons.forEach((btn) => btn.classList.remove("locating"));
+        S.toast("위치 정보를 가져오지 못했습니다. 브라우저 권한을 확인해주세요.");
+      },
+      { enableHighAccuracy: true, timeout: 8000 }
+    );
   };
 
   S.showMapError = function (message = "지도를 불러오지 못했습니다.") {

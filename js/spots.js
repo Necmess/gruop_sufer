@@ -68,8 +68,10 @@
 
   S.updateTodayHighlight = function () {
     const available = S.SPOTS.map((spot) => ({ spot, data: S.state.data[spot.id] })).filter(({ data }) => data?.status === "ok");
-    const recommend = document.querySelector("#todayRecommend .today-body");
-    const avoid = document.querySelector("#todayAvoid .today-body");
+    const recommendCard = document.getElementById("todayRecommend");
+    const avoidCard = document.getElementById("todayAvoid");
+    const recommend = recommendCard.querySelector(".today-body");
+    const avoid = avoidCard.querySelector(".today-body");
     if (!available.length) {
       recommend.textContent = "데이터를 불러오는 중이거나 이용할 수 없습니다.";
       avoid.textContent = "데이터를 불러오는 중이거나 이용할 수 없습니다.";
@@ -80,8 +82,31 @@
     const waveText = (value) => value == null ? "-" : `${value.toFixed(1)}m`;
     const windText = (value) => value == null ? "-" : `${Math.round(value)}km/h`;
     const conditionText = (item) => `${item.data.source === "khoa" ? `서핑지수 ${S.gradeLabel(item.data.grade)}` : `컨디션 점수 ${item.data.score}`} · 파고 ${waveText(item.data.wave)} · 바람 ${windText(item.data.wind)}`;
+    recommendCard.style.backgroundImage = `url('${best.spot.image}')`;
     recommend.innerHTML = `<b>${best.spot.name}</b> (${best.spot.region})<span class="sub">${conditionText(best)}</span>`;
-    avoid.innerHTML = (worst.data.source === "khoa" ? worst.data.grade === "poor" : worst.data.score < 40) ? `<b>${worst.spot.name}</b> (${worst.spot.region})<span class="sub">${conditionText(worst)}</span>` : "오늘은 대부분의 스팟에서 서핑을 즐길 수 있어요.";
+    const worstIsBad = worst.data.source === "khoa" ? worst.data.grade === "poor" : worst.data.score < 40;
+    avoidCard.style.backgroundImage = worstIsBad ? `url('${worst.spot.image}')` : "";
+    avoid.innerHTML = worstIsBad ? `<b>${worst.spot.name}</b> (${worst.spot.region})<span class="sub">${conditionText(worst)}</span>` : "오늘은 대부분의 스팟에서 서핑을 즐길 수 있어요.";
+  };
+
+  S.haversineKm = function (lat1, lon1, lat2, lon2) {
+    const toRad = (deg) => (deg * Math.PI) / 180;
+    const earthRadiusKm = 6371;
+    const dLat = toRad(lat2 - lat1);
+    const dLon = toRad(lon2 - lon1);
+    const a = Math.sin(dLat / 2) ** 2 + Math.cos(toRad(lat1)) * Math.cos(toRad(lat2)) * Math.sin(dLon / 2) ** 2;
+    return earthRadiusKm * 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
+  };
+
+  S.updateNearbySpot = function (lat, lon) {
+    const card = document.getElementById("todayNearby");
+    const body = document.getElementById("todayNearbyBody");
+    if (!card || !body || !S.SPOTS.length) return;
+    const nearest = S.SPOTS.map((spot) => ({ spot, distance: S.haversineKm(lat, lon, spot.lat, spot.lon) })).sort((a, b) => a.distance - b.distance)[0];
+    card.style.backgroundImage = `url('${nearest.spot.image}')`;
+    const data = S.state.data[nearest.spot.id];
+    const conditionText = data?.status === "ok" ? `${data.source === "khoa" ? "서핑지수" : "컨디션"} ${data.score == null ? S.gradeLabel(data.grade) : data.score} · ${S.gradeLabel(data.grade)}` : "컨디션 확인 중";
+    body.innerHTML = `<b>${nearest.spot.name}</b> (${nearest.spot.region})<span class="sub">내 위치에서 약 ${nearest.distance.toFixed(1)}km · ${conditionText}</span>`;
   };
 
   S.setupSearchAndFav = function () {

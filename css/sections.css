@@ -78,7 +78,7 @@
 
 .today-highlight .section-inner {
   display: grid;
-  grid-template-columns: 1fr 1fr;
+  grid-template-columns: repeat(3, 1fr);
   gap: 18px;
 }
 
@@ -89,20 +89,42 @@
   overflow: hidden;
   box-shadow: var(--shadow);
   color: var(--white);
-  min-height: 100px;
-  transition: transform 0.2s ease;
+  min-height: 148px;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  background-size: cover;
+  background-position: center;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
 }
 
 .today-card:hover {
   transform: translateY(-2px);
+  box-shadow: var(--shadow-lg);
 }
 
-.today-card.recommend {
-  background: linear-gradient(135deg, #5cb88a, #8ecfb8);
+.today-card::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: 0;
 }
 
-.today-card.avoid {
-  background: linear-gradient(135deg, #e07a7a, #f4a98a);
+.today-card > * {
+  position: relative;
+  z-index: 1;
+}
+
+.today-card.recommend::before {
+  background: linear-gradient(135deg, rgba(74, 184, 138, 0.94) 0%, rgba(92, 184, 138, 0.55) 50%, rgba(30, 58, 74, 0.75) 100%);
+}
+
+.today-card.avoid::before {
+  background: linear-gradient(135deg, rgba(224, 122, 122, 0.94) 0%, rgba(244, 169, 138, 0.55) 50%, rgba(30, 58, 74, 0.75) 100%);
+}
+
+.today-card.nearby::before {
+  background: linear-gradient(135deg, rgba(45, 143, 173, 0.94) 0%, rgba(74, 173, 201, 0.55) 50%, rgba(30, 58, 74, 0.75) 100%);
 }
 
 .today-tag {
@@ -114,6 +136,7 @@
   padding: 5px 12px;
   border-radius: 999px;
   margin-bottom: 12px;
+  align-self: flex-start;
 }
 
 .today-body {
@@ -133,6 +156,26 @@
   opacity: 0.9;
   margin-top: 6px;
 }
+
+.today-locate-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  background: rgba(255, 255, 255, 0.22);
+  border: 1px solid rgba(255, 255, 255, 0.4);
+  color: var(--white);
+  font-size: 0.88rem;
+  font-weight: 600;
+  padding: 9px 16px;
+  border-radius: 999px;
+  cursor: pointer;
+  transition: background 0.15s;
+}
+
+.today-locate-btn:hover { background: rgba(255, 255, 255, 0.32); }
+.today-locate-btn svg { flex-shrink: 0; }
+.today-locate-btn.locating { opacity: 0.85; cursor: wait; }
+.today-locate-btn.locating svg { animation: locate-spin 0.9s linear infinite; }
 
 /* ── Spots section ── */
 .spots-section {
@@ -232,6 +275,60 @@
 .dot.good { background: var(--good); }
 .dot.fair { background: var(--fair); }
 .dot.poor { background: var(--poor); }
+
+/* ── Map toolbar ── */
+.map-toolbar {
+  position: absolute;
+  top: 14px;
+  left: 14px;
+  z-index: 400;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.map-tool-group,
+.map-tool-standalone {
+  background: var(--white);
+  border-radius: var(--radius-sm);
+  box-shadow: var(--shadow);
+  overflow: hidden;
+}
+
+.map-tool-group { display: flex; flex-direction: column; }
+
+.map-tool-btn {
+  width: 34px;
+  height: 34px;
+  border: none;
+  background: none;
+  padding: 0;
+  color: var(--navy);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: background 0.15s, color 0.15s;
+}
+
+.map-tool-btn:hover { background: var(--sky); color: var(--ocean-deep); }
+.map-tool-btn:active { background: var(--ocean-light); }
+.map-tool-group .map-tool-btn:first-child { border-bottom: 1px solid var(--line); }
+.map-tool-btn.locating { color: var(--ocean); }
+.map-tool-btn.locating svg { animation: locate-spin 0.9s linear infinite; }
+
+@keyframes locate-spin {
+  to { transform: rotate(360deg); }
+}
+
+.user-location-dot {
+  width: 14px;
+  height: 14px;
+  border-radius: 50%;
+  background: var(--ocean);
+  border: 3px solid var(--white);
+  box-shadow: 0 0 0 4px rgba(74, 173, 201, 0.35);
+}
 
 .cards-toolbar { margin-bottom: 14px; }
 
